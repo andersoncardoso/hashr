@@ -137,19 +137,19 @@
             </div>
 
             <div class="login-form">
-                <div class="control-group">
+                <!--div class="control-group">
                     <input autocorrect="off" spellcheck="false" type="text" class="login-field userInput notstored" value="" placeholder="username" id="inputUser">
                     <label class="login-field-icon fui-user" for="login-name"></label>
-                </div>
+                </div-->
 
                 <div class="control-group">
-                    <input autocorrect="off" spellcheck="false" type="text" class="login-field userInput typeahead notstored" value="" placeholder="web domain" id="inputDomain">
-                    <label class="login-field-icon fui-lock" for="login-pass"></label>
+                    <input autocorrect="off" spellcheck="false" type="text" class="login-field userInput" value="" placeholder="web domain" id="inputDomain">
+                    <label class="login-field-icon fui-lock" for="inputDomain"></label>
                 </div>
 
                 <div class="control-group">
                     <input autocorrect="off" spellcheck="false" type="password" class="login-field userInput stored" value="" placeholder="secret key" id="inputPhrase">
-                    <label class="login-field-icon fui-lock" for="login-pass"></label>
+                    <label class="login-field-icon fui-lock" for="inputPhrase"></label>
                 </div>
 
                 <div class="control-group" id="outputInfo">
@@ -175,9 +175,14 @@ function hex_hash(e,t){return t=="sha512"?hex_sha512(e):hex_md5(e)}function b64_
 
 var $output, $user, $phrase, $domain, $info, $help;
 
+var CONFIG = {
+  user: 'apierre_cardoso',
+  length: 20,
+};
+
 $(document).ready(function () {
 
-    $user = $('#inputUser');
+    <!--$user = $('#inputUser');-->
     $output = $('#outputPassword');
     $phrase = $('#inputPhrase');
     $domain = $('#inputDomain');
@@ -187,9 +192,9 @@ $(document).ready(function () {
     $('#showPassword').on('click', function (e) {
 
         var Phrase = clean($phrase.val());
-        var User = $user.val().replace(/\s/g, '').toLowerCase();
+        var User = CONFIG.user; // $user.val().replace(/\s/g, '').toLowerCase();
         var Domain = $domain.val().replace(/\s/g, '').toLowerCase();
-        var Len =  20; // $length.val().replace(/\s/g, '');
+        var Len =  CONFIG.lenght; // $length.val().replace(/\s/g, '');
 
         if (!User) {
             $user.css('background-color', '#ff9');
