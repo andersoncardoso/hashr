@@ -130,6 +130,7 @@ $(document).ready(function () {
         var key = e.which;
         if (e.type == 'change' || key == 8 || key == 32 || (key > 45 && key < 91) || (key > 95 && key < 112) || (key > 185 && key < 223)) {
             $output.hide();
+            $copy.hide();
             $phrase.css('background-color', '#ECF0F1');
             // $user.css('background-color', '#ECF0F1');
             $domain.css('background-color', '#ECF0F1');
@@ -142,18 +143,35 @@ $(document).ready(function () {
     });
 
     $copy.on('click', function (e) {
-        console.log('here?');
-        copyToClipboard($output.val());
+        copyToClipboard('outputPassword');
         e.preventDefault();
     });
 });
 
-function copyToClipboard(value) {
-    var $temp = $("<input>");
-    $("body").append($temp);
-    $temp.val(value).select();
-    document.execCommand("copy");
-    $temp.remove();
+function copyToClipboard(elementId) {
+    var input = document.getElementById(elementId);
+    var isiOSDevice = navigator.userAgent.match(/ipad|iphone/i);
+    if (isiOSDevice) {
+        var editable = input.contentEditable;
+        var readOnly = input.readOnly;
+
+        input.contentEditable = true;
+        input.readOnly = false;
+
+        var range = document.createRange();
+        range.selectNodeContents(input);
+
+        var selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+
+        input.setSelectionRange(0, 999999);
+        input.contentEditable = editable;
+        input.readOnly = readOnly;
+    } else {
+        input.select();
+    }
+    document.execCommand('copy');
 }
 
 function clean(str) {
